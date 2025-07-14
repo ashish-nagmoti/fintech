@@ -1,0 +1,223 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%; /* White */
+    --foreground: 220 13% 15%; /* Dark Grey */
+    --card: 0 0% 100%;
+    --card-foreground: 220 13% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 15%;
+    --primary: 200 60% 40%; /* Muted Teal */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 20% 90%; /* Light Grey-Blue */
+    --secondary-foreground: 220 13% 15%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 70% 50%; /* Muted Red */
+    --destructive-foreground: 0 0% 100%;
+    --border: 210 10% 80%; /* Light Grey */
+    --input: 210 10% 80%;
+    --ring: 200 60% 40%;
+    --radius: 0.75rem;
+    --chart-1: 200 60% 40%; /* Muted Teal */
+    --chart-2: 140 60% 40%; /* Muted Green */
+    --chart-3: 40 60% 40%; /* Muted Orange */
+    --chart-4: 260 60% 40%; /* Muted Purple */
+    --chart-5: 320 60% 40%; /* Muted Pink */
+  }
+
+  .dark {
+    --background: 220 13% 15%; /* Dark Grey */
+    --foreground: 210 20% 90%; /* Light Grey-Blue */
+    --card: 220 13% 15%;
+    --card-foreground: 210 20% 90%;
+    --popover: 220 13% 15%;
+    --popover-foreground: 210 20% 90%;
+    --primary: 200 60% 60%; /* Lighter Muted Teal */
+    --primary-foreground: 220 13% 15%;
+    --secondary: 210 10% 30%; /* Darker Grey-Blue */
+    --secondary-foreground: 210 20% 90%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 70% 60%; /* Lighter Muted Red */
+    --destructive-foreground: 210 40% 98%;
+    --border: 210 10% 30%;
+    --input: 210 10% 30%;
+    --ring: 200 60% 60%;
+    --chart-1: 200 60% 60%;
+    --chart-2: 140 60% 60%;
+    --chart-3: 40 60% 60%;
+    --chart-4: 260 60% 60%;
+    --chart-5: 320 60% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom animations - simplified or removed */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px); /* Reduced float distance */
+  }
+}
+
+/* Removed pulse-glow, shimmer, bounce-in, gradient-shift keyframes */
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(10px); /* Reduced slide distance */
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-float {
+  animation: float 2s ease-in-out infinite; /* Reduced duration */
+}
+
+/* Removed animate-pulse-glow, animate-shimmer, animate-bounce-in, animate-gradient */
+
+.animate-slide-up {
+  animation: slide-up 0.4s ease-out; /* Reduced duration */
+}
+
+/* Interactive elements - toned down */
+.interactive-card {
+  @apply transition-all duration-200 ease-out hover:scale-[1.01] hover:shadow-md hover:-translate-y-0.5; /* Reduced scale and shadow */
+}
+
+.interactive-button {
+  @apply transition-all duration-150 ease-out hover:scale-100; /* Reduced scale */
+}
+
+.glass-effect {
+  @apply bg-white/10 backdrop-blur-sm border border-white/10; /* Reduced blur and border opacity */
+}
+
+.gradient-text {
+  /* Changed to a subtle gradient or solid color */
+  @apply text-primary; /* Use primary color instead of strong gradient */
+}
+
+.gradient-border {
+  /* Removed or simplified */
+  @apply border border-border; /* Replaced with standard border */
+}
+
+/* Custom scrollbar - kept as is */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100/50 dark:bg-slate-800/50 rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary rounded-full; /* Used primary color */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary/80;
+}
+
+/* Loading skeleton - kept as is */
+.skeleton {
+  @apply animate-pulse bg-gradient-to-r from-slate-200 via-slate-300 to-slate-200 dark:from-slate-700 dark:via-slate-600 dark:to-slate-700;
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Smooth transitions - kept as is */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+/* Progress bar animations - kept as is */
+.progress-bar {
+  @apply transition-all duration-1000 ease-out;
+}
+
+/* Button hover effects - simplified */
+.btn-primary {
+  @apply bg-primary hover:bg-primary/90 shadow-sm hover:shadow-md transition-all duration-200;
+}
+
+.btn-secondary {
+  @apply bg-secondary hover:bg-secondary/90 shadow-sm hover:shadow-md transition-all duration-200;
+}
+
+/* Card hover effects - simplified */
+.card-hover {
+  @apply transition-all duration-200 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-0.5;
+}
+
+/* Icon animations - simplified */
+.icon-bounce {
+  @apply transition-transform duration-150 hover:scale-105; /* Reduced scale and removed rotate */
+}
+
+/* Notification styles - kept as is */
+.notification-success {
+  @apply bg-gradient-to-r from-green-500 to-emerald-500 text-white;
+}
+
+.notification-error {
+  @apply bg-gradient-to-r from-red-500 to-pink-500 text-white;
+}
+
+.notification-info {
+  @apply bg-gradient-to-r from-blue-500 to-cyan-500 text-white;
+}
+
+/* Minimalistic dropdown/popover animations */
+[data-radix-popper-content][data-state="open"] {
+  animation: v0-fade-in 0.15s ease-out forwards !important;
+}
+
+[data-radix-popper-content][data-state="closed"] {
+  animation: v0-fade-out 0.15s ease-in forwards !important;
+}
+
+@keyframes v0-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px); /* Subtle slide for a smoother appearance */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes v0-fade-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(2px); /* Subtle slide for exit */
+  }
+}

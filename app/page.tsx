@@ -30,6 +30,7 @@ import { InvestmentDashboard } from "@/components/investment-dashboard";
 import SettingsPanel from "@/components/settings-panel"; // Changed to default import
 import { FinancialOverview } from "@/components/financial-overview";
 import Image from "next/image";
+import { askGemini } from "@/lib/gemini";
 
 const quickActions = [
   {
@@ -63,6 +64,7 @@ export default function FinBotApp() {
   const [showQuickActions, setShowQuickActions] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [geminiReply, setGeminiReply] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -111,6 +113,16 @@ export default function FinBotApp() {
       hour12: true,
     });
   };
+
+  async function handleGeminiChat(e: React.FormEvent) {
+    e.preventDefault();
+    if (!input.trim()) return;
+    setIsTyping(true);
+    setGeminiReply(null);
+    const res = await askGemini(input);
+    setGeminiReply(res.reply);
+    setIsTyping(false);
+  }
 
   if (showSettings) {
     return <SettingsPanel onBack={() => setShowSettings(false)} />;
@@ -394,6 +406,19 @@ export default function FinBotApp() {
               </div>
             )}
 
+            {geminiReply && (
+              <div className="flex gap-3 animate-slide-up justify-start">
+                <Avatar className="h-9 w-9 bg-primary flex-shrink-0 shadow-sm interactive-card">
+                  <AvatarFallback className="text-white bg-transparent">
+                    <Bot className="h-4 w-4" />
+                  </AvatarFallback>
+                </Avatar>
+                <Card className="p-3 shadow-sm border border-border interactive-card bg-card text-foreground">
+                  <p className="text-sm whitespace-pre-wrap leading-relaxed">{geminiReply}</p>
+                </Card>
+              </div>
+            )}
+
             <div ref={messagesEndRef} />
           </div>
 
@@ -429,7 +454,7 @@ export default function FinBotApp() {
 
           {/* Chat Input */}
           <div className="p-2 sm:p-4 border-t border-border bg-card/80 backdrop-blur-sm">
-            <form onSubmit={handleSubmit} className="flex gap-2 flex-col sm:flex-row">
+            <form onSubmit={handleGeminiChat} className="flex gap-2 flex-col sm:flex-row">
               <Input
                 ref={inputRef}
                 value={input}

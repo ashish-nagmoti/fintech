@@ -2,7 +2,8 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { addTransaction, getTransactions } from "@/lib/finance-api"
+import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -36,18 +37,13 @@ const incomeCategories = [
 export function TransactionForm() {
   const { formatAmount, getCurrencySymbol } = useCurrency()
 
-  const [transactions, setTransactions] = useState([
-    {
-      id: 1,
-      type: "expense",
-      category: "Food & Dining",
-      amount: 1200,
-      description: "Lunch at restaurant",
-      date: "2024-01-15",
-    },
-    { id: 2, type: "income", category: "Salary", amount: 45000, description: "Monthly salary", date: "2024-01-14" },
-    { id: 3, type: "expense", category: "Transportation", amount: 800, description: "Uber ride", date: "2024-01-14" },
-  ])
+  const [transactions, setTransactions] = useState<any[]>([])
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
+
+  useEffect(() => {
+    getTransactions().then(setTransactions)
+  }, [])
 
   const [formData, setFormData] = useState({
     type: "expense",
@@ -61,6 +57,8 @@ export function TransactionForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setLoading(true)
+    setSuccess(false)
     if (formData.category && formData.amount) {
       setIsSubmitting(true)
 
@@ -85,6 +83,9 @@ export function TransactionForm() {
       })
       setIsSubmitting(false)
     }
+    setLoading(false)
+    setSuccess(true)
+    getTransactions().then(setTransactions)
   }
 
   const deleteTransaction = (id: number) => {
@@ -291,6 +292,7 @@ export function TransactionForm() {
                 </div>
               )}
             </Button>
+            {success && <div className="text-green-600">Transaction added!</div>}
           </form>
         </CardContent>
       </Card>
